@@ -11,26 +11,26 @@ import { StatusBar } from "expo-status-bar";
 import WheatherForcastItems from "../components/WheatherForcastItems";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import GetLocation from "react-native-get-location";
+// import GetLocation from "react-native-get-location";
 
 const Home = () => {
-  const loca = () => {
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 15000,
-    })
-      .then((location) => {
-        location ? console.log(location) : console.log("wait");
-      })
-      .catch((error) => {
-        const { code, message } = error;
-        console.warn(code, message);
-      });
-  };
+  // const loca = () => {
+  //   GetLocation.getCurrentPosition({
+  //     enableHighAccuracy: true,
+  //     timeout: 15000,
+  //   })
+  //     .then((location) => {
+  //       location ? console.log(location) : console.log("wait");
+  //     })
+  //     .catch((error) => {
+  //       const { code, message } = error;
+  //       console.warn(code, message);
+  //     });
+  // };
 
-  useEffect(() => {
-    loca();
-  }, []);
+  // useEffect(() => {
+  //   loca();
+  // }, []);
 
   return (
     <LinearGradient
