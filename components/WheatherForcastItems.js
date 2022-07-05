@@ -1,8 +1,12 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Day, Month } from "../Day-Month";
+import { LinearGradient } from "expo-linear-gradient";
 
-const WheatherForcastItems = () => {
+const WheatherForcastItems = ({ item }) => {
+  const d = item.date.split("-");
+  const date = new Date(+d[0], +d[1] - 1, +d[2]);
   return (
-    <TouchableOpacity>
+    <TouchableOpacity key={item.date_epoch}>
       <View
         style={{
           flexDirection: "row",
@@ -11,25 +15,42 @@ const WheatherForcastItems = () => {
           paddingHorizontal: 5,
         }}
       >
-        <Image
-          source={require("../assets/27.png")}
-          style={{ height: 75, width: 75 }}
-        />
+        <LinearGradient
+          colors={["#D3D7DA", "transparent"]}
+          style={{
+            borderRadius: 100,
+            padding: 11,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https:" + item.day.condition.icon,
+            }}
+            style={{ height: 58, width: 58 }}
+          />
+        </LinearGradient>
         <View
           style={{
             flexDirection: "row",
-            borderColor: "#111",
+            borderColor: "rgb(0, 0, 0, 0.5)",
             borderWidth: 0.5,
             borderRadius: 50,
-            //   paddingHorizontal: 30,
             width: "63%",
             justifyContent: "space-between",
-            //   paddingVertical: 15,
-            paddingHorizontal: 35,
+            paddingHorizontal: 20,
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 30, color: "#3a2cb7" }}>30</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              width: "50%",
+              paddingHorizontal: 5,
+            }}
+          >
+            <Text style={{ fontSize: 30, color: "#3a2cb7" }}>
+              {item.day.maxtemp_c.toFixed(0)}
+            </Text>
             <Text
               style={{
                 fontSize: 20,
@@ -41,9 +62,11 @@ const WheatherForcastItems = () => {
               °
             </Text>
           </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            <Text>Monday</Text>
-            <Text>5 July</Text>
+          <View style={{ justifyContent: "center", width: "50%" }}>
+            <Text>{Day[date.getDay() - 1]}</Text>
+            <Text>
+              {item.date.slice(8, 10)} {Month[date.getMonth()]}
+            </Text>
           </View>
         </View>
       </View>
