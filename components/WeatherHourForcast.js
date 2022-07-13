@@ -1,12 +1,13 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Day, Month } from "../Day-Month";
 import { LinearGradient } from "expo-linear-gradient";
+import { useState } from "react";
+import { Entypo } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const WheatherForcastItems = ({ item }) => {
-  const d = item.date.split("-");
-  const date = new Date(+d[0], +d[1] - 1, +d[2]);
   return (
-    <TouchableOpacity key={item.date_epoch}>
+    <TouchableOpacity key={item.time}>
       <View
         style={{
           flexDirection: "row",
@@ -25,7 +26,7 @@ const WheatherForcastItems = ({ item }) => {
         >
           <Image
             source={{
-              uri: "https:" + item.day.condition.icon,
+              uri: "https:" + item.condition.icon,
             }}
             style={{ height: 53, width: 53 }}
           />
@@ -50,7 +51,7 @@ const WheatherForcastItems = ({ item }) => {
             }}
           >
             <Text style={{ fontSize: 30, color: "#3a2cb7" }}>
-              {item.day.maxtemp_c.toFixed(0)}
+              {item.temp_c.toFixed(0)}
             </Text>
             <Text
               style={{
@@ -64,10 +65,26 @@ const WheatherForcastItems = ({ item }) => {
             </Text>
           </View>
           <View style={{ justifyContent: "center", width: "50%" }}>
-            <Text>{Day[date.getDay() - 1]}</Text>
             <Text>
-              {item.date.slice(8, 10)} {Month[date.getMonth()]}
+              {item.time.slice(11)} {item.time.slice(11, 13) > 12 ? "PM" : "AM"}
             </Text>
+            {item.chance_of_rain > 0 && (
+              <Text>
+                <Entypo name="drop" size={14} color="black" />
+                {item.chance_of_rain}%
+              </Text>
+            )}
+            {
+              (item.chance_of_rain =
+                0 && item.chance_of_snow > 0 ? (
+                  <Text>
+                    <FontAwesome5 name="snowflake" size={14} color="black" />
+                    {item.chance_of_snow}%
+                  </Text>
+                ) : (
+                  <></>
+                ))
+            }
           </View>
         </View>
       </View>

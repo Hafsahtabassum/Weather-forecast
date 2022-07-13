@@ -14,15 +14,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WheatherForcastItems from "../components/WheatherForcastItems";
+import WeatherHourForcast from "../components/WeatherHourForcast";
 import { Day, Month } from "../Day-Month";
 import * as Location from "expo-location";
-// import GetLocation from "react-native-get-location";
 
 const Home = () => {
   const [weather, setWeather] = useState();
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
+  const currentTime = new Date();
   // API link Function
   const weatherForcast = (location) =>
     `https://api.weatherapi.com/v1/forecast.json?key=5d786fa305ec469390053744220407&q=${location}&days=7`;
@@ -33,7 +33,6 @@ const Home = () => {
       .get(weatherForcast(location))
       .catch((err) => console.log(err.message));
     setWeather(data);
-    console.log(location);
   };
 
   // Date formatiing function
@@ -198,10 +197,25 @@ const Home = () => {
               >
                 Future weather
               </Text>
-              <ScrollView>
-                {weather.data.forecast.forecastday.map((item) => (
-                  <WheatherForcastItems item={item} key={item.date_epoch} />
-                ))}
+              <ScrollView horizontal={true} pagingEnabled={true}>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {weather.data.forecast.forecastday
+                    .slice(0, 1)
+                    .map((item) =>
+                      item.hour.map((item) =>
+                        item.time.slice(11, 13) < currentTime.getHours() ? (
+                          <></>
+                        ) : (
+                          <WeatherHourForcast item={item} key={item.time} />
+                        )
+                      )
+                    )}
+                </ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                  {weather.data.forecast.forecastday.map((item) => (
+                    <WheatherForcastItems item={item} key={item.date_epoch} />
+                  ))}
+                </ScrollView>
               </ScrollView>
             </View>
           </View>
