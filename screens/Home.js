@@ -2,12 +2,14 @@ import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useLayoutEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   ActivityIndicator,
   Image,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -31,6 +33,7 @@ const Home = () => {
       .get(weatherForcast(location))
       .catch((err) => console.log(err.message));
     setWeather(data);
+    console.log(location);
   };
 
   // Date formatiing function
@@ -53,15 +56,12 @@ const Home = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(
         location
-          ? location.coords.latitude + "," + location.coords.longitude
+          ? location.coords.latitude.toFixed(4) +
+              "," +
+              location.coords.longitude.toFixed(4)
           : "Lahore"
       );
     })();
-    // setLocationMap(
-    //   location
-    //     ? location.coords.latitude + "," + location.coords.longitude
-    //     : "Lahore"
-    // );
   }, [location]);
 
   useLayoutEffect(() => {
@@ -78,7 +78,16 @@ const Home = () => {
       <SafeAreaView>
         <StatusBar style="light" />
         {weather ? (
-          <View style={{ width: "90%", alignSelf: "center", paddingTop: "5%" }}>
+          <View style={{ width: "90%", alignSelf: "center", paddingTop: "8%" }}>
+            <View style={{ position: "absolute", right: 0, top: 5 }}>
+              <TouchableOpacity onPress={() => fetchWeather()}>
+                <Ionicons
+                  name="md-reload-circle-sharp"
+                  size={35}
+                  color="#ffff"
+                />
+              </TouchableOpacity>
+            </View>
             <View style={{ alignSelf: "center" }}>
               <Text
                 style={{
