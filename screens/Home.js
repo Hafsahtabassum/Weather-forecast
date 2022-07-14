@@ -1,8 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
+import * as Location from "expo-location";
 import { StatusBar } from "expo-status-bar";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { useLayoutEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -13,10 +14,9 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import WheatherForcastItems from "../components/WheatherForcastItems";
 import WeatherHourForcast from "../components/WeatherHourForcast";
+import WheatherForcastItems from "../components/WheatherForcastItems";
 import { Day, Month } from "../Day-Month";
-import * as Location from "expo-location";
 
 const Home = () => {
   const [weather, setWeather] = useState();

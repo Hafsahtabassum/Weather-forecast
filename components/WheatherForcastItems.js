@@ -1,6 +1,6 @@
+import { LinearGradient } from "expo-linear-gradient";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Day, Month } from "../Day-Month";
-import { LinearGradient } from "expo-linear-gradient";
 
 const WheatherForcastItems = ({ item }) => {
   const d = item.date.split("-");

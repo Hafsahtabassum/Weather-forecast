@@ -1,9 +1,6 @@
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { Day, Month } from "../Day-Month";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 const WheatherForcastItems = ({ item }) => {
   return (

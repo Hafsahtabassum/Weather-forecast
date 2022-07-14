@@ -1,11 +1,6 @@
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
 import Home from "./screens/Home";
-// import Setting from "./screens/Setting";
-// import "react-native-gesture-handler";
 
 const StackNavigator = () => {
   const Stack = createStackNavigator();
@@ -20,15 +15,6 @@ const StackNavigator = () => {
           }}
         />
       </Stack.Group>
-      {/* <Stack.Group
-        screenOptions={{
-          presentation: "modal",
-          gestureEnabled: true,
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-        }}
-      >
-        <Stack.Screen name={"setting"} component={Setting} />
-      </Stack.Group> */}
     </Stack.Navigator>
   );
 };
