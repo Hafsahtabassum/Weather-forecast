@@ -1,11 +1,11 @@
 export const Day = [
+  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday",
 ];
 export const Month = [
   "January",

@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
@@ -101,7 +101,19 @@ const Home = () => {
                   : weather.data.location.name}
               </Text>
               <Text style={{ textAlign: "center", color: "#ffff" }}>
-                {weather.data.current.condition.text}
+                {weather.data.forecast.forecastday[0].day.condition.text}
+                {"  "}
+                {weather.data.forecast.forecastday[0].day.daily_chance_of_rain >
+                  0 && (
+                  <Text>
+                    <Entypo name="drop" size={14} color="#ffff" />
+                    {
+                      weather.data.forecast.forecastday[0].day
+                        .daily_chance_of_rain
+                    }
+                    %
+                  </Text>
+                )}
               </Text>
               <View
                 style={{
@@ -119,7 +131,9 @@ const Home = () => {
                   }}
                 >
                   <Text style={{ fontSize: 90, color: "#ffff" }}>
-                    {weather.data.current.temp_c.toFixed(0)}
+                    {weather.data.forecast.forecastday[0].day.avgtemp_c.toFixed(
+                      0
+                    )}
                   </Text>
                   <Text
                     style={{ fontSize: 65, color: "#ffff", marginBottom: 22 }}
@@ -130,7 +144,9 @@ const Home = () => {
                 <View style={{ height: 120 }}>
                   <Image
                     source={{
-                      uri: "https:" + weather.data.current.condition.icon,
+                      uri:
+                        "https:" +
+                        weather.data.forecast.forecastday[0].day.condition.icon,
                     }}
                     style={{ height: 120, width: 120 }}
                   />
@@ -149,7 +165,7 @@ const Home = () => {
                 <Text
                   style={{ textAlign: "center", color: "#ffff", fontSize: 18 }}
                 >
-                  {weather.data.current.wind_kph} kph
+                  {weather.data.forecast.forecastday[0].day.maxwind_kph} kph
                 </Text>
               </View>
               <View>
@@ -161,16 +177,14 @@ const Home = () => {
                 <Text
                   style={{ textAlign: "center", color: "#ffff", fontSize: 18 }}
                 >
-                  {weather.data.current.humidity}%
+                  {weather.data.forecast.forecastday[0].day.avghumidity}%
                 </Text>
               </View>
             </View>
             <Text
               style={{ color: "#ffff", paddingTop: "10%", textAlign: "center" }}
             >
-              {Day[
-                formatedDate(weather.data.current.last_updated).getDay() - 1
-              ] +
+              {Day[formatedDate(weather.data.current.last_updated).getDay()] +
                 " " +
                 formatedDate(weather.data.current.last_updated).getDate() +
                 ", " +
@@ -203,7 +217,7 @@ const Home = () => {
                     .slice(0, 1)
                     .map((item) =>
                       item.hour.map((item) =>
-                        item.time.slice(11, 13) < currentTime.getHours() ? (
+                        item.time.slice(11, 13) <= currentTime.getHours() ? (
                           <></>
                         ) : (
                           <WeatherHourForcast item={item} key={item.time} />

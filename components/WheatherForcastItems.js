@@ -5,6 +5,7 @@ import { Day, Month } from "../Day-Month";
 const WheatherForcastItems = ({ item }) => {
   const d = item.date.split("-");
   const date = new Date(+d[0], +d[1] - 1, +d[2]);
+
   return (
     <TouchableOpacity key={item.date_epoch}>
       <View
@@ -50,7 +51,7 @@ const WheatherForcastItems = ({ item }) => {
             }}
           >
             <Text style={{ fontSize: 30, color: "#3a2cb7" }}>
-              {item.day.maxtemp_c.toFixed(0)}
+              {item.day.avgtemp_c.toFixed(0)}
             </Text>
             <Text
               style={{
@@ -64,7 +65,7 @@ const WheatherForcastItems = ({ item }) => {
             </Text>
           </View>
           <View style={{ justifyContent: "center", width: "50%" }}>
-            <Text>{Day[date.getDay() - 1]}</Text>
+            <Text>{Day[date.getDay()]}</Text>
             <Text>
               {item.date.slice(8, 10)} {Month[date.getMonth()]}
             </Text>
